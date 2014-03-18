@@ -46,12 +46,31 @@
                 <li><a  href="javascript:void(0);" onclick="playlist('goose_member_guest_original');">members original</a></li>
                 <li><a  href="javascript:void(0);" onclick="playlist('goose_original');">Goose original</a></li>
                 <li><a  href="javascript:void(0);" onclick="playlist('goose_christmas');">Goose christmas</a></li>
+            </ul>
+            <ul>
                 <li><a  href="javascript:void(0);" onclick="stop();">停止</a></li>
                 <li><a  href="javascript:void(0);" onclick="play();">停止からの再生</a></li>
                 <li><a  href="javascript:void(0);" onclick="toRandom();">ランダム再生</a></li>
                 <li><a  href="javascript:void(0);" onclick="toSequential();">順番に再生</a></li>
                 <li><a  href="javascript:void(0);" onclick="nextPlay();">次の曲</a></li>
             </ul>
+            <ul>
+                <li><a  href="javascript:void(0);" onclick="volumeUp();">ボリュームアップ</a></li>
+                <li><a  href="javascript:void(0);" onclick="volumeDown();">ボリュームダウン</a></li>
+            </ul>
+            <ul>
+                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('small');" value="small">small</li>
+                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('medium');" value="medium">medium</li>
+                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('large');" value="large">large</li>
+                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('hd720');" value="hd720">hd720</li>
+                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('hd1080');" value="hd1080">hd1080</li>
+                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('highres');" value="highres">highres</li>
+                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('default');" value="default" checked>default</li>
+            </ul>
+            <ul>
+                <li><a href="" target="currentPlay" id="currentPlay">再生中の曲</a></li>
+            </ul>
+
         </div>
         <div class="col-md-10">
             <div id="ytapiplayer">
@@ -86,6 +105,7 @@
                 play();
             }
             if (newState == 1) {
+                $("#currentPlay").attr("href" , ytplayer.getVideoUrl());
                 // 再生中
             }
             if (newState == 2) {
@@ -121,7 +141,7 @@
                 state = ytplayer.getPlayerState();
                 console.log("play " + state);
                 if (state == 0 || state == -1 || state == 5) {
-                    ytplayer.loadVideoById(playLists[playName][playIdx] ,0 , "large");
+                    ytplayer.loadVideoById(playLists[playName][playIdx] ,0 , quality);
                     ytplayer.playVideo();
                 } else if (state == 2) {
                     ytplayer.playVideo();
@@ -146,6 +166,22 @@
             if (ytplayer) {
                 ytplayer.pauseVideo();
             }
+        }
+
+        function volumeDown() {
+            if (ytplayer) {
+                ytplayer.setVolume(ytplayer.getVolume() - 3);
+            }
+        }
+
+        function volumeUp() {
+            if (ytplayer) {
+                ytplayer.setVolume(ytplayer.getVolume() + 3);
+            }
+        }
+
+        function updateQuality(quality) {
+
         }
 
         var playLists = {
@@ -255,6 +291,7 @@
         var playName = "goose2013";
         var playIdx = -1;
         var randomPlay = false;
+        var quality = "default";
         playLists["all"] = playLists["all"].concat(playLists["pyhouse_v1"]);
         playLists["all"] = playLists["all"].concat(playLists["pyhouse_v2"]);
         playLists["all"] = playLists["all"].concat(playLists["goose2011"]);
