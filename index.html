@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <title>Goose house player</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+
+    <style type="text/css">
+        body {
+            padding-top: 20px;
+        }
+    </style>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+
+<body>
+
+<div class="container-fluid">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+    <div class="row">
+        <div class="col-md-2">
+            <ul>
+                <li><a  href="javascript:void(0);" onclick="playlist('all');">Goose house</a></li>
+                <li><a  href="javascript:void(0);" onclick="playlist('pyhouse_v1');">PY house 1</a></li>
+                <li><a  href="javascript:void(0);" onclick="playlist('pyhouse_v2');">PY house 2</a></li>
+                <li><a  href="javascript:void(0);" onclick="playlist('goose2011');">Goose 2011</a></li>
+                <li><a  href="javascript:void(0);" onclick="playlist('goose2012');">Goose 2012</a></li>
+                <li><a  href="javascript:void(0);" onclick="playlist('goose2013');">Goose 2013</a></li>
+                <li><a  href="javascript:void(0);" onclick="playlist('goose2014');">Goose 2014</a></li>
+                <li><a  href="javascript:void(0);" onclick="playlist('goose_member_guest_original');">members original</a></li>
+                <li><a  href="javascript:void(0);" onclick="playlist('goose_original');">Goose original</a></li>
+                <li><a  href="javascript:void(0);" onclick="playlist('goose_christmas');">Goose christmas</a></li>
+                <li><a  href="javascript:void(0);" onclick="stop();">停止</a></li>
+                <li><a  href="javascript:void(0);" onclick="play();">停止からの再生</a></li>
+                <li><a  href="javascript:void(0);" onclick="toRandom();">ランダム再生</a></li>
+                <li><a  href="javascript:void(0);" onclick="toSequential();">順番に再生</a></li>
+                <li><a  href="javascript:void(0);" onclick="nextPlay();">次の曲</a></li>
+            </ul>
+        </div>
+        <div class="col-md-10">
+            <div id="ytapiplayer">
+                You need Flash player 8+ and JavaScript enabled to view this video.
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //
+        var params = { allowScriptAccess: "always" };
+        var atts = { id: "myytplayer" };
+        swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapiid=ytapiplayer",
+                "ytapiplayer", "1280", "720", "8", null, null, params, atts);
+
+        var currentPlay = null;
+
+        function onYouTubePlayerReady(playerId) {
+            console.log("onYouTubePlayerReady " + playerId);
+            ytplayer = document.getElementById("myytplayer");
+            console.log(ytplayer);
+            ytplayer.addEventListener("onStateChange" , "stateChange");
+        }
+
+        function stateChange(newState) {
+            console.log("new state " + newState);
+            if (newState == -1) {
+                // 未開始
+            }
+            if (newState == 0) {
+                // 終了
+                //ytplayer.loadVideoById("7DOLntbtAow",0 , "large");
+                play();
+            }
+            if (newState == 1) {
+                // 再生中
+            }
+            if (newState == 2) {
+                // 一時停止中
+            }
+            if (newState == 3) {
+                // バッファリング中
+            }
+            if (newState == 5) {
+                //console.log("playVideo");
+                // 頭出し済み
+                //ytplayer.playVideo();
+                play();
+            }
+
+        }
+
+        function play() {
+            console.log("play ");
+            if (ytplayer) {
+                if (randomPlay) {
+                    playIdx = Math.floor( Math.random() * playLists[playName].length );
+                } else {
+                    if (playIdx == -1) {
+                        playIdx = 0;
+                    } else {
+                        playIdx = playIdx +1;
+                        if (playLists[playName].length < playIdx ) {
+                            playIdx = 0;
+                        }
+                    }
+                }
+                state = ytplayer.getPlayerState();
+                console.log("play " + state);
+                if (state == 0 || state == -1 || state == 5) {
+                    ytplayer.loadVideoById(playLists[playName][playIdx] ,0 , "large");
+                    ytplayer.playVideo();
+                } else if (state == 2) {
+                    ytplayer.playVideo();
+                }
+            }
+        }
+
+        function nextPlay() {
+            ytplayer.pauseVideo();
+            ytplayer.stopVideo();
+            //play();
+        }
+
+        function playlist(listName) {
+            console.log("play " + listName);
+            playName = listName;
+            playIdx = -1;
+            play();
+        }
+
+        function stop() {
+            if (ytplayer) {
+                ytplayer.pauseVideo();
+            }
+        }
+
+        var playLists = {
+            "pyhouse_v1" : ["H-Wut0BVQ_U" , "xzHGXopIjc0" , "GyFtL4hmoN0" ,
+                "lkLro07kYtA" , "6_unu2fNi4s" , "tGwtNyEbvVs" , "0LpfTphAfMI" , "rGXLXImN7nI" , "7FtoNUdkfNc" ,
+                    "Qa9XAmLO8l4" , "O6mJvhdm5MQ" , "_BVEt3xtYos" , "0qA8zwYOl9o" , "WcOUxyhDVSY" , "U2Sc19rRAl0" ,
+                    "hYmy7szIuIw" , "yTzc2VnjkQw" , "g7PEIiD8V9Y" , "vqV6y8nH4R8" , "2HYQpbqAe6w" , "Axl7VT0y63s" ,
+                    "uhEM8oALyII" , "pp7ZiCKN3IQ" , "GGeRq0fE5oE" , "rWHbK8dq1gU" , "pwMHH4fTLxE" , "hfVELQk27W4" ,
+                    "Yv2mnchq6LY" , "lotrw32qs38" , "9OaZs3cKoTk" , "uNHzJG-30Zs" ,
+                    "-G8uM2DKGME" , "juVGd6ZApWU" , "YEz3J4Ukmtk" ,
+                    "Tv5WMoPDUwo" , "4ckzJS0R3Zg" , "zWXFyRHolHA" ,
+                    "K-ZS2MFQy1o" , "3trYIk73p0k" , "MIxeuUIeF3U" , "Xv4nXYbQQ34" , "o7V9T5YuUO4" , "-Ay0OakbX8U" ,
+                    "se36IdE1_Nw" , "7u7tZSye8GQ" , "JFfWmMcOU5Q" , "FREAPyuceuM" , "-qzh4sRe_3w" ,
+                    "1xBjwzIF_e4" , "ojFz98v3BHM" , "Z5PM0FhFkoQ" , "dCKMLrTvV04" , "CnV34wsvbCE" , "2Sx4Kwowr7U"
+            ] ,
+            "pyhouse_v2" : [
+                    "7FnP1K3JJBw" , "ZUTqVx49NAQ" , "uYaSmK6DUkw" , "7Cp-e70yj6Y" , "a_-clIaVvko" , "BvsK5HN3WiU" ,
+                    "Qv46dvfWa8Q" , "KsSFpuToNh8" , "6Xm8EEJ6rjc" , "jFZ67_poJjM" , "EjS1IREdOjE" , "XpH_xZaBrzQ" ,
+                    "UIqH9bZlqlo" , "1l3d7C243mQ" , "veemHKlHB6Q" , "s_8NZ8rn_Us" , "sbGzz8BfBu4" , "yY9O-V0DDqk" ,
+                    "UDK0GQmN8aI" , "s5WnkWu-_HE" , "YgKjqN4mYSg" , "jnGrjfh9gHE" , "HJBgWizZuSk" , "p0pf6B59HUI" ,
+                    "mMG-EoDpd2w" , "fhahd1bgksE" , "eO35NeuPQqI" , "CYBl8uNMfKQ" , "l_t88F98snM" , "uKqydUNfi80" ,
+                    "mv6GMGf8L5Y" , "b9lwmxbis8M" , "wfpPt8z2aEA" , "XIFkD5J8GjQ" , "J5urSMpUFMc" , "Zy46FW5heU0" ,
+                    "tF4s6l_3o7M" , "Zw100vOIk5c" , "PKvwQ4f_XpE" , "MFNETL-PbeI" , "vb5BhEY2Gpw" ,
+                    "y03Xkh0mmC0" , "ysjEib8E_no" , "GaEQJYgQNi0" , "41-0qVxPSt0" , "2sgCzV51tj0" ,
+                    "0S8GPdo5XbI" , "368MlsCI25M" , "iI74IGxvugQ" , "gN2OjERZqCQ" , "3Rsf_Tahgk4" , "V58EqJxODSo" ,
+                    "8yS8GOvKfSs" , "GazyY-e5Xto" , "_ZJtGAx7siw" , "dACw-xCioBE" , "1VobwuqSpuo" , "NkIxOZKtOQo" ,
+                    "nUxmX76ghUs" , "emGiPyoAfz8" , "zgnH_MNzlqs" , "HpJ93q51YW8" , "ghOsH6uY8oA" , "ySC0apNduaQ" ,
+                    "rxbDuc0zhx4" , "YOkxRDaYuDk" , "t5m--7k60lE" , "ZFWu2q04NtM" , "LA-JDnpt2iQ" , "LA-JDnpt2iQ" ,
+                    "Kx7cvmpLyiE" , "_JUOD8LPHLQ" , "cIDPdhKkfYI" , "zs5NEaHNNu0" , "bDXjSP_8CAc" ,
+                    "_CddRkYpKtI" , "VO7KrhjbrWg" , "RoWuNTc7djY" , "wFojgCbralk" ,
+                    "0iNlmysyP5A" , "UhCqdxsgc-M" , "Ew2vD0pv3Pw" , "M_ktlIXJhfc" , "jxzI9XOfh6w" ,
+                    "BjBsUko_-X0" , "jTJqPBMZXKs" , "Hx_RSNa2YDU" , "uH7xgGKEnz0" ,
+                    "pPZIVXDy53E" , "pZN0nHB0qRQ" , "H_o753eDRVQ" , "TD-fhGL0Bzk" , "DM1iiAkOEK0" , "y9oJXm3ygOE" ,
+                    "V0I8s5qldHo" , "Xr2JQ3xW-Gc" , "u1kvlgf-tTM"
+            ] ,
+            "goose2011" : [
+                    "vtA_DWA6tx4" , "B254xxs4ywM" , "h2IffIvIRm0" , "UyJ8Qbh_LH0" ,
+                    "0Ji_xcV3zmI" , "ikX_TUSgb-0" , "nOmppjvG7ks" , "weRWZIndnOA" ,
+                    "APwg_YqvhbE" , "MUvXJu4i0a0" , "1hx1GVFO9Cs" , "Y3Wiwh3M__g" ,
+                    "PSYRdI-13dI" , "41S6liUvoq4" , "B4F-sweNJoQ" , "ZV2jhl2OWMo" , "RqHZUWLxMdo" , "c3PCcMAgIx8" ,
+                    "Pj6oFoJktLM" , "JoaPnfcaM0M" , "YavNgBaqHoc" , "-aFHv3eLq8g" , "dhQeNAv_RoA" , "ggBcpLQJb0o" ,
+                    "8I-qBnFbse0" , "jJjWWRv1FT4" , "dT-I8vThSuA" , "rIH4hSA2kLc" , "PRebgmIeVb0" ,
+                    "mIq_QPuTWHo" , "0SSlJymmLMc" , "NV0YUJ3DBIU" , "3V3X9alrXTE" ,
+                    "WHZMt-6stQs" , "anYPlVAkPSQ" , "Ocy2RqL8Ac0" , "oVaeZVYgEfs" , "z_PB3Jfo03o" ,
+                    "Wb0FT-6OjUE" , "6JrNLMLg7RE" , "KzfvVe2Ph6w" , "0mrm8OKOjCM" ,
+                    "C138QPKNU2U" , "_KiCtINRalc" , "jKNbfiPczqo" , "EPcPGc7f-aE" , "Nn1_KZZdUMk" , "HJg7WkOHxMs" ,
+                    "fa5biSOaFJg" , "w0f1ojQbKzw" , "JMCKOpQ-pIM"
+            ] ,
+            "goose2012" : [
+                    "sMCXMH8VAE4" , "1UVodfF7aZI" , "keA2A8FCo5w" , "jZ1GWob9Bxk" , "UpqC6wYC14U" , "zkLCprHkqYY" ,
+                    "LVPcTo5nGnU" , "SMVY1cm3eV8" , "AXHr_3l0wng" , "Z-kO6n23Ydg" , "jYIDnOifvfA" ,
+                    "Ip_0YtVxJGE" , "XQHaWxYjPVw" , "He79ZLV0x-0" , "7MA0jtdjHSM" , "-87Q50gqRFM" ,
+                    "vkpxsCZo2tk" , "4GYmD7Ogusc" , "GUIDZik9M_I" , "UNOLELxhYQg" , "zTuBeNrUU9I" ,
+                    "dj93e1nLGwE" , "twb8cB9dRHU" , "CENfFHw9Kg8" , "Vhosr_SjjN0" , "fUbFZkfjpfQ" , "fTs3gXDsWEU" ,
+                    "npNEdDxCNrk" , "fphH41xbWEQ" , "LcWXIbcCxEQ" , "rlma_TP8lr4" ,
+                    "g5r6W3v54Js" , "N5Vk_9K7C9g" , "DKtmZBFmS7s" , "Mc-pN4rZK84" , "HMzyU1zSO1o" ,
+                    "mq9PU2XY3bQ" , "suIwWlyeEC4" , "sVMj0sMfA2c" , "cjQ2eORmIUo" ,
+                    "VNluFrNy_5I" , "kl4SC2DGud4" , "pPscQ92DM8M" ,
+                    "sXVAN3thxME" , "wasKHC7X4Uw" , "yZKzGehDxmo" , "WccI5RAdzek" ,
+                    "qkgJ85oCodU" , "CZrChkoycBA" , "IXyctNFW25o" , "iyRqY2775cA" ,
+                    "UB1oZZ6aaAU" , "HOXXDj4OzDI" , "G3Y6JALsXvk" , "npSkmTvIjO4" , "sWvuAO_LHiw" ,
+                    "J5CyzT7HUz4" , "N30PVsHHc4U" , "M8nu4gkOlbI"
+            ] ,
+            "goose2013" : [
+                    "8IJVS7pVWg8" , "2nx81srj44c" , "xXIm6ba1oxE" , "fs1vP01vGeY" , "VAP2AzRxDbs" , "aQ0VdvWdKsk" ,
+                    "csSLXUP9xk0" , "_bzS83nl3oM" , "g3nZrrg_ulE" , "qcprnxnkBcs" , "Sr0lC5rWz9U" , "6622p95gpNA" ,
+                    "C_Srcfj7qHA" , "WVk70BIfxaQ" , "6KZksQWLN48" , "16VVZB0bnnE" , "fI3av1fRiYE" ,
+                    "7DOLntbtAow" , "x-THZrQTg5E" , "p5mFAYUxjnw" , "bb_qJ33fmL4" , "9bSc2tW4HpM" , "hRtRadK1HFk" ,
+                    "qccq1cc9xZE" , "EKSd6xUNPU4" , "pqrQ25psl6E" , "5kTbT9m9LNo" , "qngpExBNLCE" , "6bM5SzQFpZQ" ,
+                    "G4FUjD_N8YU" , "7QHXcb0oqF4" , "FOs04eyWBKQ" , "GAwHAstt3lE" , "Sn-Bj7wwAak" , "v1LVAJYebL0" ,
+                    "viEz9OkWdk8" , "Mma_aps8Cik" , "_5k_4Rkk6Do" , "HRn2OIFs8DA" , "H8TAOHLLT0w" , "H8TAOHLLT0w" ,
+                    "85_I2yVcbhU" , "ihCRNP9y9lg" , "svEYFvGOF3U" , "p7LcjQcAWtg" , "PYTLakk8lNo" , "yJptus8dsKY" ,
+                    "_FkPM-_RrCI" , "JC5oFWeXIKY" , "fEsyBaG-uNw" , "Co0TmFvqxvY" , "lg57i_222zg" , "Ig_arzhGuhM" ,
+                    "Q54jE2K_OQ0" , "HHNxnM9B7TM" , "kl-0ABda1aA" , "z__B_djrJc4" , "q2TqOAir_Ow" , "5kfEOVCxikc" ,
+                    "B7KK4DGnxyA" , "QzfC0_A73Hg" , "Y7OHmxvuIwE" , "TsKs0oGhTWo" , "ogD3hP8e6TU" , "DPS3loXzGTw" ,
+                    "h1M4X8GSpWA" , "ttWlPvrIQZk" , "BwHi6k50f7A"
+            ] ,
+            "goose2014" : [
+                    "cjXr122Rxg4" , "wj5pVZ2JbVU" , "w8e_e6FMRmk" , "GJXmBq47EGg" , "k21LAaRZ-uM" , "TohhjiAkmZ8" ,
+                    "ZbhW_GDuk0c" , "OziIP5rbuE4" , "DqS1HZcVxps" , "FngB6Em17Zk" , "UUzuLx_LLgk" , "u3gPNKinadw" ,
+                    "OS15080xVmY"
+            ],
+            "goose_member_guest_original" : ["Rx2Pk1AE4Fg" , "XU9_m8Ul7Cg" ,
+                    "497mV85yhUM" , "WD00QxwBTSY" , "JmNUI29IKCs" , "oI76VzHC_Go" , "XXCzJK3-iZY" , "wZaDIOJKEJA" ,
+                    "Eahu-s-CXkk" , "MXgTZqGHDhw" , "ls9VW2oJhoE" , "KFivNGXdl34" , "hd41RDP2JDU" , "YK7jRR3BmBU" ,
+                    "85nir6cByKk" , "aBO3dePaUYw" , "cP6x1-YIBmM" , "JhjQps5WcUc" , "14Zl8mWKUzk" , "GtLmBjkFQ7k" ,
+                    "eNM6Xz7JMTY"
+            ] ,
+            "goose_original" : [
+                    "VBgzGP0ITUc" , "iksQUFp1gDg" , "GJiARx6l66A" , "6e3KeO4ICKI" , "oSL2nCSD17g" ,
+                    "MCXSldXbidI" , "zCtE0PgptNs" , "9_o3V4CVess" , "zvmlcwyHR5Q" , "3MEPz665D1E" ,
+                    "EGqZM0sHBuY" , "qKJhvyAv2fY" , "nh1w1-QVRT4" , "Zjr_-7O43C4" , "LITAGDY95g0" ,
+                    "2mXPSsoew9k" , "PJ7xVKz8I6w" , "jfIeFt4Wou0" , "e3g1rnkneBE" , "tpO0ATpYRw8" ,
+                    "4LkmEIdb4Oo" , "vk9LlFDkCb0" , "EkT7tnpipPM" , "ul8aqTw8-30" , "PY9qT5FtqHY" ,
+                    "vk2bq8tPe9g" , "jmBDn9WyRKc" , "NukkrzLgRjY" , "eyNqLvdZY-8" , "s6CLngcj6Z8" ,
+                    "2G3KsrvDPKQ" , "zZ1g2tAXqWQ" , "nCOoxRs9IOQ" , "Galpr9dwJuk" , "jG_khMzhAGc" ,
+                    "6c_X3wyarLo"
+            ] ,
+            "goose_christmas" : [
+                    "WqlL3YC_Bgg" , "7KQjlUekhzk" , "WUFw3IK-qs8"
+            ] ,
+            "all" : [
+            ]
+        };
+
+
+        var playName = "goose2013";
+        var playIdx = -1;
+        var randomPlay = false;
+        playLists["all"] = playLists["all"].concat(playLists["pyhouse_v1"]);
+        playLists["all"] = playLists["all"].concat(playLists["pyhouse_v2"]);
+        playLists["all"] = playLists["all"].concat(playLists["goose2011"]);
+        playLists["all"] = playLists["all"].concat(playLists["goose2012"]);
+        playLists["all"] = playLists["all"].concat(playLists["goose2013"]);
+        playLists["all"] = playLists["all"].concat(playLists["goose2014"]);
+        playLists["all"] = playLists["all"].concat(playLists["goose_member_guest_original"]);
+        playLists["all"] = playLists["all"].concat(playLists["goose_original"]);
+        playLists["all"] = playLists["all"].concat(playLists["goose_christmas"]);
+
+    function toRandom() {
+        randomPlay = true;
+    }
+
+    function toSequential() {
+        randomPlay = false;
+    }
+
+    </script>
+</div> <!-- /container -->
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>
