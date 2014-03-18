@@ -69,6 +69,7 @@
             </ul>
             <ul>
                 <li><a href="" target="currentPlay" id="currentPlay">再生中の曲</a></li>
+                <li><a href="javascript:void(0);" onclick="replay();">この曲最初から!</a></li>
             </ul>
 
         </div>
@@ -80,7 +81,7 @@
     </div>
     <script type="text/javascript">
         //
-        var params = { allowScriptAccess: "always" };
+        var params = { allowScriptAccess: "always" , controls: "2" , fs: "0" };
         var atts = { id: "myytplayer" };
         swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapiid=ytapiplayer",
                 "ytapiplayer", "1280", "720", "8", null, null, params, atts);
@@ -153,6 +154,10 @@
             ytplayer.pauseVideo();
             ytplayer.stopVideo();
             //play();
+        }
+
+        function replay() {
+            ytplayer.seekTo(0 , true);
         }
 
         function playlist(listName) {
@@ -290,7 +295,7 @@
 
         var playName = "goose2013";
         var playIdx = -1;
-        var randomPlay = false;
+        var randomPlay = true;
         var quality = "default";
         playLists["all"] = playLists["all"].concat(playLists["pyhouse_v1"]);
         playLists["all"] = playLists["all"].concat(playLists["pyhouse_v2"]);
