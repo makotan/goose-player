@@ -54,6 +54,7 @@
                 <li><a  href="javascript:void(0);" onclick="toSequential();">順番に再生</a></li>
                 <li><a  href="javascript:void(0);" onclick="nextPlay();">次の曲</a></li>
                 <li><a href="javascript:void(0);" onclick="replay();">この曲最初から!</a></li>
+                <li><a href="javascript:void(0);" onclick="prevPlay();">前の曲</a></li>
             </ul>
             <ul>
                 <li><a  href="javascript:void(0);" onclick="volumeUp();">ボリュームアップ</a></li>
@@ -93,8 +94,8 @@
     var player;
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
-            height: '720',
-            width: '1280',
+            height: '640',
+            width: '1024',
             //videoId: 'WqlL3YC_Bgg',
             events: {
                 'onReady': onPlayerReady,
@@ -154,19 +155,16 @@
 
 
     function play() {
-        console.log("play ");
-        if (randomPlay) {
-            playIdx = Math.floor( Math.random() * currentPlayList.length );
+        console.log("play " + playIdx);
+        if (playIdx == -1) {
+            playIdx = 0;
         } else {
-            if (playIdx == -1) {
+            playIdx = playIdx +1;
+            if (currentPlayList.length <= playIdx ) {
                 playIdx = 0;
-            } else {
-                playIdx = playIdx +1;
-                if (currentPlayList < playIdx ) {
-                    playIdx = 0;
-                }
             }
         }
+        console.log("play tgt = " + playIdx + " id " + currentPlayList[playIdx]);
         state = player.getPlayerState();
         console.log("play " + state);
         if (state == 0 || state == -1 || state == 5) {
@@ -182,18 +180,19 @@
     var randomPlay = true;
     var quality = "default";
 
-    function toRandom() {
-        randomPlay = true;
-    }
-
-    function toSequential() {
-        randomPlay = false;
-    }
-
     function nextPlay() {
         player.pauseVideo();
         player.stopVideo();
-        //play();
+    }
+
+    function prevPlay() {
+        if (playIdx == 0) {
+            playIdx = currentPlayList.length -2;
+        } else {
+            playIdx = playIdx -2;
+        }
+        player.pauseVideo();
+        player.stopVideo();
     }
 
     function replay() {
@@ -204,6 +203,9 @@
         console.log("play " + listName);
         playName = listName;
         currentPlayList = playLists[playName];
+        if (randomPlay) {
+            toRandom();
+        }
         playIdx = -1;
         play();
     }
@@ -230,6 +232,21 @@
 
     }
 
+    function toSequential() {
+        currentPlayList = playLists[playName];
+        randomPlay = false;
+    }
+
+    function toRandom() {
+        randomPlay = true;
+        currentPlayList = playLists[playName];
+        for(var i=0 ; i < currentPlayList.length; i++) {
+            playIdx = Math.floor( Math.random() * currentPlayList.length );
+            var now = currentPlayList[i];
+            currentPlayList[i] = currentPlayList[playIdx];
+            currentPlayList[playIdx] = now;
+        }
+    }
 
     var playLists = {
         "pyhouse_v1" : ["H-Wut0BVQ_U" , "xzHGXopIjc0" , "GyFtL4hmoN0" ,
