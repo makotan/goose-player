@@ -36,6 +36,7 @@
     <div class="row">
         <div class="col-md-2">
             <h4>Goose house Player</h4>
+            <p>
             <div class="btn-group btn-group-vertical" data-toggle="buttons">
                 <label class="btn btn-default">
                     <input type="checkbox" class="playlist" value="pyhouse_v1" onchange="togglePlayList();"> PY house 1
@@ -65,27 +66,27 @@
                     <input type="checkbox" class="playlist" value="goose_christmas" onchange="togglePlayList();">Goose christmas
                 </label>
             </div>
-
+            </p>
 
             <!--ul>
                 <li><a  href="javascript:void(0);" onclick="volumeUp();">ボリュームアップ</a></li>
                 <li><a  href="javascript:void(0);" onclick="volumeDown();">ボリュームダウン</a></li>
             </ul-->
-            <ul>
-                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('small');" value="small">small</li>
-                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('medium');" value="medium">medium</li>
-                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('large');" value="large">large</li>
-                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('hd720');" value="hd720">hd720</li>
-                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('hd1080');" value="hd1080">hd1080</li>
-                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('highres');" value="highres">highres</li>
-                <li><input type="radio" name="suggestedQuality" onchange="updateQuality('default');" value="default" checked>default</li>
+            <ul class="list-group">
+                <li class="list-group-item"><input type="radio" name="suggestedQuality" onchange="updateQuality('small');" value="small">低画質</li>
+                <li class="list-group-item"><input type="radio" name="suggestedQuality" onchange="updateQuality('medium');" value="medium">中画質</li>
+                <li class="list-group-item"><input type="radio" name="suggestedQuality" onchange="updateQuality('large');" value="large">高画質</li>
+                <li class="list-group-item"><input type="radio" name="suggestedQuality" onchange="updateQuality('hd720');" value="hd720">HD720</li>
+                <li class="list-group-item"><input type="radio" name="suggestedQuality" onchange="updateQuality('hd1080');" value="hd1080">HD1080</li>
+                <li class="list-group-item"><input type="radio" name="suggestedQuality" onchange="updateQuality('highres');" value="highres">ハイレゾ</li>
+                <li class="list-group-item"><input type="radio" name="suggestedQuality" onchange="updateQuality('default');" value="default" checked>標準</li>
             </ul>
-            <ul>
-                <li><a href="" target="currentPlay" id="currentPlay">再生中の曲</a></li>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="" target="currentPlay" id="currentPlay">再生中の曲</a></li>
             </ul>
-            <ul>
-                <li><a href="http://goosehouse.jp/" target="_blank">オフィシャルページ</a></li>
-                <li><a href="http://www.ustream.tv/channel/playyouhouse" target="_blank">オフィシャルustream</a></li>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="http://goosehouse.jp/" target="_blank">オフィシャルページ</a></li>
+                <li class="list-group-item"><a href="http://www.ustream.tv/channel/playyouhouse" target="_blank">オフィシャルustream</a></li>
             </ul>
 
         </div>
@@ -118,7 +119,7 @@
         player = new YT.Player('player', {
             height: '640',
             width: '1024',
-            videoId: 'WqlL3YC_Bgg',
+            //videoId: 'WqlL3YC_Bgg',
             events: {
                 'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
@@ -197,7 +198,7 @@
         }
     }
 
-    var playName = "goose2013";
+    var playName = "goose_christmas";
     var playIdx = -1;
     var randomPlay = true;
     var quality = "default";
