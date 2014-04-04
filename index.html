@@ -37,15 +37,15 @@
         <div class="col-md-2">
             <ul>
                 <li><a  href="javascript:void(0);" onclick="playlist('all');">Goose house</a></li>
-                <li><a  href="javascript:void(0);" onclick="playlist('pyhouse_v1');">PY house 1</a></li>
-                <li><a  href="javascript:void(0);" onclick="playlist('pyhouse_v2');">PY house 2</a></li>
-                <li><a  href="javascript:void(0);" onclick="playlist('goose2011');">Goose 2011</a></li>
-                <li><a  href="javascript:void(0);" onclick="playlist('goose2012');">Goose 2012</a></li>
-                <li><a  href="javascript:void(0);" onclick="playlist('goose2013');">Goose 2013</a></li>
-                <li><a  href="javascript:void(0);" onclick="playlist('goose2014');">Goose 2014</a></li>
-                <li><a  href="javascript:void(0);" onclick="playlist('goose_member_guest_original');">members original</a></li>
-                <li><a  href="javascript:void(0);" onclick="playlist('goose_original');">Goose original</a></li>
-                <li><a  href="javascript:void(0);" onclick="playlist('goose_christmas');">Goose christmas</a></li>
+                <li><input type="checkbox" class="playlist" value="pyhouse_v1" onchange="togglePlayList();">PY house 1</li>
+                <li><input type="checkbox" class="playlist" value="pyhouse_v2" onchange="togglePlayList();">PY house 2</li>
+                <li><input type="checkbox" class="playlist" value="goose2011" onchange="togglePlayList();">Goose 2011</li>
+                <li><input type="checkbox" class="playlist" value="goose2012" onchange="togglePlayList();">Goose 2012</li>
+                <li><input type="checkbox" class="playlist" value="goose2013" onchange="togglePlayList();">Goose 2013</li>
+                <li><input type="checkbox" class="playlist" value="goose2014" onchange="togglePlayList();">Goose 2014</li>
+                <li><input type="checkbox" class="playlist" value="goose_member_guest_original" onchange="togglePlayList();">members original</li>
+                <li><input type="checkbox" class="playlist" value="goose_original" onchange="togglePlayList();">Goose original</li>
+                <li><input type="checkbox" class="playlist" value="goose_christmas" onchange="togglePlayList();">Goose christmas</li>
             </ul>
             <ul>
                 <li><a  href="javascript:void(0);" onclick="stop();">停止</a></li>
@@ -96,7 +96,7 @@
         player = new YT.Player('player', {
             height: '640',
             width: '1024',
-            //videoId: 'WqlL3YC_Bgg',
+            videoId: 'WqlL3YC_Bgg',
             events: {
                 'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
@@ -203,6 +203,29 @@
         console.log("play " + listName);
         playName = listName;
         currentPlayList = playLists[playName];
+        if (randomPlay) {
+            toRandom();
+        }
+        playIdx = -1;
+        play();
+    }
+
+    var playNames = [];
+    function togglePlayList() {
+        var list = [];
+
+        $(".playlist").each(function() {
+            if($(this).prop('checked')) {
+                list.push($(this).attr('value'));
+            }
+        });
+        playNames = list;
+        console.log(playNames);
+        var playList = [];
+        for(var i=0; i < playNames.length ; i++) {
+            playList = playList.concat(playLists[playNames[i]]);
+        }
+        currentPlayList = playList;
         if (randomPlay) {
             toRandom();
         }
