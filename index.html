@@ -279,13 +279,14 @@
     }
 
     function toSequential() {
-        currentPlayList = playLists[playName];
+        //currentPlayList = playLists[playName];
+        togglePlayList();
         randomPlay = false;
     }
 
     function toRandom() {
         randomPlay = true;
-        currentPlayList = playLists[playName];
+        //currentPlayList = playLists[playName];
         for(var i=0 ; i < currentPlayList.length; i++) {
             playIdx = Math.floor( Math.random() * currentPlayList.length );
             var now = currentPlayList[i];
