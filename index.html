@@ -35,7 +35,7 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
     <div class="row">
         <div class="col-md-2">
-            <h3>Goose house Player</h3>
+            <h4>Goose house Player</h4>
             <div class="btn-group btn-group-vertical" data-toggle="buttons">
                 <label class="btn btn-default">
                     <input type="checkbox" class="playlist" value="pyhouse_v1" onchange="togglePlayList();"> PY house 1
@@ -66,22 +66,11 @@
                 </label>
             </div>
 
-            <p>
-            <div class="btn-group btn-group-vertical" data-toggle="buttons">
-                <a class="btn btn-primary" href="javascript:void(0);" onclick="stop();"><span class="glyphicon glyphicon-pause"></span>停止</a>
-                <a class="btn btn-primary" href="javascript:void(0);" onclick="play();"><span class="glyphicon glyphicon-play"></span>停止からの再生</a>
-                <a class="btn btn-primary" href="javascript:void(0);" onclick="toRandom();"><span class="glyphicon glyphicon-refresh"></span>ランダム再生</a>
-                <a class="btn btn-primary" href="javascript:void(0);" onclick="toSequential();"><span class="glyphicon glyphicon-align-justify"></span>順番に再生</a>
-                <a class="btn btn-primary" href="javascript:void(0);" onclick="nextPlay();"><span class="glyphicon glyphicon-forward"></span>次の曲</a>
-                <a class="btn btn-primary" href="javascript:void(0);" onclick="replay();"><span class="glyphicon glyphicon-backward"></span>この曲最初から!</a>
-                <a class="btn btn-primary" href="javascript:void(0);" onclick="prevPlay();"><span class="glyphicon glyphicon-step-backward"></span>前の曲</a>
-            </div>
-            </p>
 
-            <ul>
+            <!--ul>
                 <li><a  href="javascript:void(0);" onclick="volumeUp();">ボリュームアップ</a></li>
                 <li><a  href="javascript:void(0);" onclick="volumeDown();">ボリュームダウン</a></li>
-            </ul>
+            </ul-->
             <ul>
                 <li><input type="radio" name="suggestedQuality" onchange="updateQuality('small');" value="small">small</li>
                 <li><input type="radio" name="suggestedQuality" onchange="updateQuality('medium');" value="medium">medium</li>
@@ -102,6 +91,17 @@
         </div>
         <div class="col-md-10">
             <div id="player"></div>
+            <p>
+            <div class="btn-group " data-toggle="buttons">
+            <a class="btn btn-primary" href="javascript:void(0);" onclick="prevPlay();"><span class="glyphicon glyphicon-step-backward"></span>前の曲</a>
+            <a class="btn btn-primary" href="javascript:void(0);" onclick="replay();"><span class="glyphicon glyphicon-backward"></span>この曲最初から!</a>
+            <a class="btn btn-primary" href="javascript:void(0);" onclick="stop();"><span class="glyphicon glyphicon-pause"></span>停止</a>
+            <a class="btn btn-primary" href="javascript:void(0);" onclick="play();"><span class="glyphicon glyphicon-play"></span>停止からの再生</a>
+            <a class="btn btn-primary" href="javascript:void(0);" onclick="nextPlay();"><span class="glyphicon glyphicon-forward"></span>次の曲</a>
+            <a class="btn btn-primary" href="javascript:void(0);" onclick="toRandom();"><span class="glyphicon glyphicon-refresh"></span>ランダム再生</a>
+            <a class="btn btn-primary" href="javascript:void(0);" onclick="toSequential();"><span class="glyphicon glyphicon-align-justify"></span>順番に再生</a>
+            </div>
+            </p>
         </div>
     </div>
     <script type="text/javascript">
