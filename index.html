@@ -35,27 +35,49 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
     <div class="row">
         <div class="col-md-2">
-            <ul>
-                <li><a  href="javascript:void(0);" onclick="playlist('all');">Goose house</a></li>
-                <li><input type="checkbox" class="playlist" value="pyhouse_v1" onchange="togglePlayList();">PY house 1</li>
-                <li><input type="checkbox" class="playlist" value="pyhouse_v2" onchange="togglePlayList();">PY house 2</li>
-                <li><input type="checkbox" class="playlist" value="goose2011" onchange="togglePlayList();">Goose 2011</li>
-                <li><input type="checkbox" class="playlist" value="goose2012" onchange="togglePlayList();">Goose 2012</li>
-                <li><input type="checkbox" class="playlist" value="goose2013" onchange="togglePlayList();">Goose 2013</li>
-                <li><input type="checkbox" class="playlist" value="goose2014" onchange="togglePlayList();">Goose 2014</li>
-                <li><input type="checkbox" class="playlist" value="goose_member_guest_original" onchange="togglePlayList();">members original</li>
-                <li><input type="checkbox" class="playlist" value="goose_original" onchange="togglePlayList();">Goose original</li>
-                <li><input type="checkbox" class="playlist" value="goose_christmas" onchange="togglePlayList();">Goose christmas</li>
-            </ul>
-            <ul>
-                <li><a  href="javascript:void(0);" onclick="stop();">停止</a></li>
-                <li><a  href="javascript:void(0);" onclick="play();">停止からの再生</a></li>
-                <li><a  href="javascript:void(0);" onclick="toRandom();">ランダム再生</a></li>
-                <li><a  href="javascript:void(0);" onclick="toSequential();">順番に再生</a></li>
-                <li><a  href="javascript:void(0);" onclick="nextPlay();">次の曲</a></li>
-                <li><a href="javascript:void(0);" onclick="replay();">この曲最初から!</a></li>
-                <li><a href="javascript:void(0);" onclick="prevPlay();">前の曲</a></li>
-            </ul>
+            <h3>Goose house Player</h3>
+            <div class="btn-group btn-group-vertical" data-toggle="buttons">
+                <label class="btn btn-default">
+                    <input type="checkbox" class="playlist" value="pyhouse_v1" onchange="togglePlayList();"> PY house 1
+                </label>
+                <label class="btn btn-default">
+                    <input type="checkbox" class="playlist" value="pyhouse_v2" onchange="togglePlayList();"> PY house 2
+                </label>
+                <label class="btn btn-default">
+                    <input type="checkbox" class="playlist" value="goose2011" onchange="togglePlayList();"> Goose 2011
+                </label>
+                <label class="btn btn-default">
+                    <input type="checkbox" class="playlist" value="goose2012" onchange="togglePlayList();"> Goose 2012
+                </label>
+                <label class="btn btn-default">
+                    <input type="checkbox" class="playlist" value="goose2013" onchange="togglePlayList();"> Goose 2013
+                </label>
+                <label class="btn btn-default">
+                    <input type="checkbox" class="playlist" value="goose2014" onchange="togglePlayList();"> Goose 2014
+                </label>
+                <label class="btn btn-default">
+                    <input type="checkbox" class="playlist" value="goose_member_guest_original" onchange="togglePlayList();">members original
+                </label>
+                <label class="btn btn-default">
+                    <input type="checkbox" class="playlist" value="goose_original" onchange="togglePlayList();">Goose original
+                </label>
+                <label class="btn btn-default">
+                    <input type="checkbox" class="playlist" value="goose_christmas" onchange="togglePlayList();">Goose christmas
+                </label>
+            </div>
+
+            <p>
+            <div class="btn-group btn-group-vertical" data-toggle="buttons">
+                <a class="btn btn-primary" href="javascript:void(0);" onclick="stop();"><span class="glyphicon glyphicon-pause"></span>停止</a>
+                <a class="btn btn-primary" href="javascript:void(0);" onclick="play();"><span class="glyphicon glyphicon-play"></span>停止からの再生</a>
+                <a class="btn btn-primary" href="javascript:void(0);" onclick="toRandom();"><span class="glyphicon glyphicon-refresh"></span>ランダム再生</a>
+                <a class="btn btn-primary" href="javascript:void(0);" onclick="toSequential();"><span class="glyphicon glyphicon-align-justify"></span>順番に再生</a>
+                <a class="btn btn-primary" href="javascript:void(0);" onclick="nextPlay();"><span class="glyphicon glyphicon-forward"></span>次の曲</a>
+                <a class="btn btn-primary" href="javascript:void(0);" onclick="replay();"><span class="glyphicon glyphicon-backward"></span>この曲最初から!</a>
+                <a class="btn btn-primary" href="javascript:void(0);" onclick="prevPlay();"><span class="glyphicon glyphicon-step-backward"></span>前の曲</a>
+            </div>
+            </p>
+
             <ul>
                 <li><a  href="javascript:void(0);" onclick="volumeUp();">ボリュームアップ</a></li>
                 <li><a  href="javascript:void(0);" onclick="volumeDown();">ボリュームダウン</a></li>
