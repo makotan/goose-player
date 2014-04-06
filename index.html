@@ -198,6 +198,7 @@
         state = player.getPlayerState();
         console.log("play " + state);
         if (state == 0 || state == -1 || state == 5) {
+            console.log(currentPlayList[playIdx] + "" + quality);
             player.loadVideoById(currentPlayList[playIdx] ,0 , quality);
             player.playVideo();
         } else if (state == 2) {
@@ -213,6 +214,7 @@
     function nextPlay() {
         player.pauseVideo();
         player.stopVideo();
+        play();
     }
 
     function prevPlay() {
@@ -382,7 +384,8 @@
         "goose2014" : [
             "cjXr122Rxg4" , "wj5pVZ2JbVU" , "w8e_e6FMRmk" , "GJXmBq47EGg" , "k21LAaRZ-uM" , "TohhjiAkmZ8" ,
             "ZbhW_GDuk0c" , "OziIP5rbuE4" , "DqS1HZcVxps" , "FngB6Em17Zk" , "UUzuLx_LLgk" , "u3gPNKinadw" ,
-            "OS15080xVmY"
+            "OS15080xVmY" , "9yunxAvbzCo" , "rS87DCftyao" , "0j8D0fZyiiQ" , "tOQ7a7HiHCY" , "HQDWOrkPC6g" ,
+            "taLrAdk1rKM" 
         ],
         "goose_member_guest_original" : ["Rx2Pk1AE4Fg" , "XU9_m8Ul7Cg" ,
             "497mV85yhUM" , "WD00QxwBTSY" , "JmNUI29IKCs" , "oI76VzHC_Go" , "XXCzJK3-iZY" , "wZaDIOJKEJA" ,
